@@ -21,6 +21,14 @@ table {
     @apply font-default bg-light-blue
 }
 
+.ant-btn{
+    @apply font-default
+}
+
 .ant-table-row:first-child{
     @apply ps-4 !important
+}
+
+.ant-select-item-option {
+    @apply font-default text-lg
 }
