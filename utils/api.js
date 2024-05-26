@@ -19,11 +19,12 @@ const api = {
     const response = await axiosInstance.get(url, { params, ...config });
     return response.data;
   },
-  post: async (url, data, token = null) => {
+  post: async (url, data, token = null, headers = null) => {
     console.log(`test ${url} ${JSON.stringify(data)} ${token}`);
     const config = token
-      ? { headers: { Authorization: `Bearer ${token}` } }
+      ? { headers: { Authorization: `Bearer ${token}`, ...headers } }
       : {};
+    console.log(config);
     const response = await axiosInstance.post(url, data, config);
     console.log(response);
     return response.data;

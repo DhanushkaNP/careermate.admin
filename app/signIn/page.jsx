@@ -3,32 +3,50 @@
 import FormContainer from "@/components/From/FormContainer";
 import FormTitle from "@/components/From/FormTitle";
 import { useLogIn } from "@/utils/Auth/auth-actions";
-import { useIsAuth } from "@/utils/Auth/auth-selectors";
+import { useIsAuth, useUserId } from "@/utils/Auth/auth-selectors";
 import { decodeToken } from "@/utils/Auth/auth-util";
+import { useSetUniversityFaculty } from "@/utils/University/uni-actions";
+import { useUniversityId } from "@/utils/University/uni-selectors";
 import api from "@/utils/api";
 import { getErrorMessage } from "@/utils/error-util";
 import { Form, Input, Button, Select, Alert } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 const SignIn = () => {
   const isAuthenticated = useIsAuth();
   const login = useLogIn();
+  const universityId = useUniversityId();
+  const setUniversityFaculty = useSetUniversityFaculty();
 
   const [form] = Form.useForm();
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && universityId) {
       router.push("/");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, universityId]);
+
+  const getUniversityFacultyData = useCallback(
+    async (url, token) => {
+      if (!url) return; // Ensure URL is available
+      console.log(`url: ${url}`);
+      try {
+        const response = await api.get(url, null, token);
+        console.log("getting uni", response);
+        setUniversityFaculty(response.universityId, response.facultyId);
+      } catch (error) {
+        console.error("Failed to get university faculty data", error);
+      }
+    },
+    [setUniversityFaculty]
+  );
 
   const onFinish = async (values) => {
     setErrorMessage(null);
-
     try {
       if (values.role == "coordinator") {
         await api
@@ -36,8 +54,12 @@ const SignIn = () => {
             email: values.email,
             password: values.password,
           })
-          .then((response) => {
+          .then(async (response) => {
             const token = decodeToken(response.token);
+            await getUniversityFacultyData(
+              `coordinator/${response.userId}/faculty`,
+              response.token
+            );
             login(response.token, response.userId, token.exp, true, false);
           });
       } else if (values.role == "assistant") {
@@ -46,8 +68,12 @@ const SignIn = () => {
             email: values.email,
             password: values.password,
           })
-          .then((response) => {
+          .then(async (response) => {
             const token = decodeToken(response.token);
+            await getUniversityFacultyData(
+              `CoordinatorAssistant/${response.userId}/Faculty`,
+              response.token
+            );
             login(response.token, response.userId, token.exp);
           });
       } else {
@@ -110,7 +136,6 @@ const SignIn = () => {
         >
           <Select
             className=" font-default"
-            defaultValue={"coordinator"}
             size="large"
             options={[
               { value: "coordinator", label: "Coordinator" },

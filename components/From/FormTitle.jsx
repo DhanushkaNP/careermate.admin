@@ -1,8 +1,8 @@
 import React from "react";
 
-const FormTitle = ({ title, subTitle, description, titleStyle }) => {
+const FormTitle = ({ title, subTitle, description, titleStyle, className }) => {
   return (
-    <div className=" mb-4">
+    <div className={`${className}`}>
       <div>
         <h3
           className={`text-dark-blue font-bold text-2xl pb-1 font-default ${titleStyle}`}

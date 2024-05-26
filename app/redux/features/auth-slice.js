@@ -22,7 +22,7 @@ export const auth = createSlice({
     logIn: (state, action) => {
       const { token, userId, expirationTime, isCoordinator, isAssitant } =
         action.payload;
-      localStorage.clear();
+      localStorage.removeItem("authData");
       localStorage.setItem(
         "authData",
         JSON.stringify({

@@ -7,7 +7,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white font-default text-dark-dark-blue">
+      <body className="bg-dark-bg font-default text-dark-dark-blue">
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
