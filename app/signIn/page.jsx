@@ -1,7 +1,7 @@
 "use client";
 
-import FormContainer from "@/components/From/FormContainer";
-import FormTitle from "@/components/From/FormTitle";
+import FormContainer from "@/components/Form/FormContainer";
+import FormTitle from "@/components/Form/FormTitle";
 import { useLogIn } from "@/utils/Auth/auth-actions";
 import { useIsAuth, useUserId } from "@/utils/Auth/auth-selectors";
 import { decodeToken } from "@/utils/Auth/auth-util";

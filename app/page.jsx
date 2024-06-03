@@ -1,7 +1,7 @@
 "use client";
 
-import FormContainer from "@/components/From/FormContainer";
-import FormTitle from "@/components/From/FormTitle";
+import FormContainer from "@/components/Form/FormContainer";
+import FormTitle from "@/components/Form/FormTitle";
 import { useIsAuth, useUserToken } from "@/utils/Auth/auth-selectors";
 import { useSetBatch } from "@/utils/University/uni-actions";
 import { useFacultyId } from "@/utils/University/uni-selectors";

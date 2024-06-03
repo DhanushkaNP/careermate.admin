@@ -2,8 +2,8 @@
 
 import BreadCrumpHeader from "@/components/BreadCrumpHeader";
 import DeleteModal from "@/components/DeleteModal";
-import CreateFormModal from "@/components/From/CreateFormModal";
-import UpdateFormModal from "@/components/From/UpdateFormModal";
+import CreateFormModal from "@/components/Form/CreateFormModal";
+import UpdateFormModal from "@/components/Form/UpdateFormModal";
 import PageTitle from "@/components/PageTitle";
 import { useIsCoordinator, useUserToken } from "@/utils/Auth/auth-selectors";
 import { useFacultyId } from "@/utils/University/uni-selectors";
