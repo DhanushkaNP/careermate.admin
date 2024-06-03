@@ -5,7 +5,7 @@ const FormTitle = ({ title, subTitle, description, titleStyle, className }) => {
     <div className={`${className}`}>
       <div>
         <h3
-          className={`text-dark-blue font-bold text-2xl pb-1 font-default ${titleStyle}`}
+          className={`text-dark-blue font-bold text-2xl mb-4 font-default ${titleStyle}`}
         >
           {title}{" "}
           {subTitle && (

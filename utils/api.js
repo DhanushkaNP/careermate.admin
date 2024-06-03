@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
 
 const api = {
   get: async (url, params = null, token = null) => {
+    console.log(url);
     const config = token
       ? { headers: { Authorization: `Bearer ${token}` } }
       : {};

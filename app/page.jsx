@@ -133,7 +133,7 @@ const RootPage = () => {
       var batchId = values["student-batch"];
       if (batchId) {
         setBatch(batchId);
-        router.push("portal/users");
+        router.push("portal/coordinators");
       }
     });
   };

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { RiAdminFill } from "react-icons/ri";
 import { PiStudentFill, PiBuildingsFill } from "react-icons/pi";
 import { MdOutlineWorkOutline } from "react-icons/md";
@@ -16,8 +16,12 @@ const { Sider } = Layout;
 const NavMenuLayout = ({ children }) => {
   const router = useRouter();
   const isAuthenticated = useIsAuth();
-  const isCoordinator = useIsCoordinator();
   const logOut = useLogout();
+
+  const [selectedKeys, setSelectedKeys] = useState(["1.1"]);
+  const handleMenuClick = (e) => {
+    setSelectedKeys([e.key]);
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -58,29 +62,67 @@ const NavMenuLayout = ({ children }) => {
             <Menu
               theme="light"
               mode="inline"
-              defaultSelectedKeys={["1"]}
+              selectedKeys={selectedKeys}
+              defaultSelectedKeys={"1.1"}
+              onClick={handleMenuClick}
               items={[
                 {
                   key: 1,
-                  icon: <RiAdminFill size={20} className=" fill-dark-blue" />,
+                  icon: (
+                    <RiAdminFill
+                      size={20}
+                      className={`font-default text-sm ${
+                        selectedKeys.some((key) => key.startsWith("1."))
+                          ? "fill-light-blue"
+                          : "fill-dark-gray"
+                      }`}
+                    />
+                  ),
                   label: (
-                    <Link
-                      href={"users"}
-                      className="font-default fill-dark-blue text-sm"
-                    >
+                    <span className={`font-default text-sm }`}>
                       Admin users
-                    </Link>
+                    </span>
                   ),
                   style: { color: "#2B3674" },
+                  children: [
+                    {
+                      key: "1.1",
+                      label: (
+                        <Link
+                          href={"coordinators"}
+                          className="font-default text-sm fill-dark-dark-blue"
+                        >
+                          Coordinators
+                        </Link>
+                      ),
+                    },
+                    {
+                      key: "1.2",
+                      label: (
+                        <Link
+                          href={"coordinator-assistants"}
+                          className="font-default text-sm fill-dark-dark-blue"
+                        >
+                          Coordinator Assistants
+                        </Link>
+                      ),
+                    },
+                  ],
                 },
                 {
                   key: 2,
-                  icon: <PiStudentFill size={24} className=" fill-dark-blue" />,
+                  icon: (
+                    <PiStudentFill
+                      size={24}
+                      className={`font-default text-sm ${
+                        selectedKeys.some((key) => key.startsWith("2"))
+                          ? "fill-light-blue"
+                          : "fill-dark-gray"
+                      }`}
+                    />
+                  ),
                   label: (
-                    <Link
-                      href={"students"}
-                      className="font-default fill-dark-blue"
-                    >
+                    <Link href={"students"} className="font-default">
                       Students
                     </Link>
                   ),
@@ -89,7 +131,14 @@ const NavMenuLayout = ({ children }) => {
                 {
                   key: 3,
                   icon: (
-                    <PiBuildingsFill size={24} className=" fill-dark-blue" />
+                    <PiBuildingsFill
+                      size={24}
+                      className={`font-default text-sm ${
+                        selectedKeys.some((key) => key.startsWith("3"))
+                          ? "fill-light-blue"
+                          : "fill-dark-gray"
+                      }`}
+                    />
                   ),
                   label: (
                     <Link
@@ -106,7 +155,11 @@ const NavMenuLayout = ({ children }) => {
                   icon: (
                     <MdOutlineWorkOutline
                       size={24}
-                      className=" fill-dark-blue"
+                      className={`font-default text-sm ${
+                        selectedKeys.some((key) => key.startsWith("4"))
+                          ? "fill-light-blue"
+                          : "fill-dark-gray"
+                      }`}
                     />
                   ),
                   label: (
@@ -121,7 +174,16 @@ const NavMenuLayout = ({ children }) => {
                 },
                 {
                   key: 5,
-                  icon: <FaBook size={24} className=" fill-dark-blue" />,
+                  icon: (
+                    <FaBook
+                      size={24}
+                      className={`font-default text-sm ${
+                        selectedKeys.some((key) => key.startsWith("5"))
+                          ? "fill-light-blue"
+                          : "fill-dark-gray"
+                      }`}
+                    />
+                  ),
                   label: (
                     <Link
                       href={"diaries"}

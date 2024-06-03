@@ -32,3 +32,19 @@ table {
 .ant-select-item-option {
     @apply font-default text-lg
 }
+
+.ant-card-body {
+    @apply py-3 w-full !important
+}
+
+.ant-statistic-content {
+    @apply flex
+}
+
+.ant-statistic-content-prefix {
+    @apply flex items-center !important
+}
+
+.ant-statistic-content-prefix svg{
+    @apply align-middle inline-block !important
+}
