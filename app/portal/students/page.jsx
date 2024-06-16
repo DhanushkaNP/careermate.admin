@@ -70,7 +70,7 @@ const Students = () => {
             prefix={
               <PiStudentFill size={30} className=" block align-middle mr-2" />
             }
-            className=" my-0 text-light-blue"
+            className=" my-0 text-light-blue font-default"
           />
         </Card>
         <Card bordered={false} className=" my-0 " hoverable>
@@ -80,6 +80,7 @@ const Students = () => {
             suffix="/ 100"
             prefix={<CheckOutlined className="mr-2" />}
             valueStyle={{ color: "#3f8600" }}
+            className="font-default"
           />
         </Card>
         <Card bordered={false} className=" my-0" hoverable>
@@ -88,6 +89,7 @@ const Students = () => {
             value={20}
             prefix={<IoMdBriefcase className="mr-2" size={30} />}
             valueStyle={{ color: "#3056D3" }}
+            className="font-default"
           />
         </Card>
         <Card bordered={false} className=" my-0 " hoverable>
@@ -99,6 +101,7 @@ const Students = () => {
             prefix={<WarningOutlined className="mr-3" />}
             valueStyle={{ color: "#cf1322" }}
             bordered
+            className="font-default"
           />
         </Card>
       </div>
@@ -168,7 +171,9 @@ const Students = () => {
             {
               key: 1,
               proPic: <Avatar icon={<UserOutlined />} className=" ms-2" />,
-              name: "Dhanushka Nuwan",
+              name: (
+                <Link href={"/portal/students/profile"}>Dhanushka Nuwan</Link>
+              ),
               studentId: "CT/2018/051",
               status: "EMPLOYEED",
               company: (

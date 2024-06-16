@@ -3,21 +3,27 @@
 import React, { useEffect, useState } from "react";
 
 const Status = ({ name, color }) => {
-  const [styleColor, setStyleColor] = useState("light-blue");
+  const [borderColor, setBorderColor] = useState("!border-light-blue");
+  const [nameColor, setNameColor] = useState("!text-light-blue");
 
   useEffect(() => {
-    if (color === "red") {
-      setStyleColor("red");
+    if (color == "blue") {
+      setBorderColor("!border-light-blue");
+      setNameColor("!text-light-blue");
+    } else if (color === "red") {
+      setBorderColor("!border-red");
+      setNameColor("!text-red");
     } else if (color === "green") {
-      setStyleColor("green");
+      setBorderColor("!border-green");
+      setNameColor("!text-green");
     }
   }, [color]);
 
   return (
     <div
-      className={`border-2 rounded-xl border-${styleColor} text-center w-fit px-3`}
+      className={`border-2 rounded-xl text-center w-fit px-3 ${borderColor}`}
     >
-      <span className={`font-semibold text-${styleColor}`}>{name}</span>
+      <span className={`font-semibold ${nameColor}`}>{name}</span>
     </div>
   );
 };

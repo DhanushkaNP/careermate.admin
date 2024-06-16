@@ -104,6 +104,7 @@ const SignIn = () => {
           description={"Enter your details to SignIn"}
           title={"CareerMate"}
           subTitle={"Admin"}
+          titleStyle={"mb-1"}
         />
         <Form.Item
           label={

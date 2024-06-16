@@ -5,7 +5,6 @@ import PageTitle from "@/components/PageTitle";
 import { Card, Statistic, Input, Select, Table, Avatar, Button } from "antd";
 import { usePathname } from "next/navigation";
 import React from "react";
-import Link from "next/link";
 
 import { PiBuildingsFill } from "react-icons/pi";
 import { CheckOutlined, WarningOutlined } from "@ant-design/icons";
@@ -74,7 +73,7 @@ const Companies = () => {
             prefix={
               <PiBuildingsFill size={30} className=" block align-middle mr-2" />
             }
-            className=" my-0"
+            className=" my-0 font-default"
             valueStyle={{ color: "#3056D3" }}
           />
         </Card>
@@ -86,6 +85,7 @@ const Companies = () => {
             value={93}
             prefix={<CheckOutlined className="mr-4" />}
             valueStyle={{ color: "#3f8600" }}
+            className="font-default"
           />
         </Card>
         <Card bordered={false} className=" my-0 " hoverable>
@@ -94,6 +94,7 @@ const Companies = () => {
             value={20}
             prefix={<WarningOutlined className="mr-3" />}
             bordered
+            className="font-default"
           />
         </Card>
       </div>

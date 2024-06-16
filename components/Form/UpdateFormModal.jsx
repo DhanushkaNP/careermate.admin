@@ -29,6 +29,7 @@ const UpdateFormModal = ({
       try {
         console.log(values);
         await onUpdate(values);
+        setError(null);
       } catch (error) {
         console.log(error.response);
         const errorMessage = getErrorMessage(error);

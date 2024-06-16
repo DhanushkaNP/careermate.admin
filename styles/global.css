@@ -48,3 +48,7 @@ table {
 .ant-statistic-content-prefix svg{
     @apply align-middle inline-block !important
 }
+
+.ant-tabs-tab {
+    @apply font-default text-sm !important
+}

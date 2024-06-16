@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { RiAdminFill } from "react-icons/ri";
 import { PiStudentFill, PiBuildingsFill } from "react-icons/pi";
 import { MdOutlineWorkOutline } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
 import { FaBook } from "react-icons/fa";
 import { Button, Divider, Layout, Menu, theme } from "antd";
 import Link from "next/link";
@@ -89,7 +90,7 @@ const NavMenuLayout = ({ children }) => {
                       key: "1.1",
                       label: (
                         <Link
-                          href={"coordinators"}
+                          href={"/portal/coordinators"}
                           className="font-default text-sm fill-dark-dark-blue"
                         >
                           Coordinators
@@ -100,7 +101,7 @@ const NavMenuLayout = ({ children }) => {
                       key: "1.2",
                       label: (
                         <Link
-                          href={"coordinator-assistants"}
+                          href={"/portal/coordinator-assistants"}
                           className="font-default text-sm fill-dark-dark-blue"
                         >
                           Coordinator Assistants
@@ -122,7 +123,7 @@ const NavMenuLayout = ({ children }) => {
                     />
                   ),
                   label: (
-                    <Link href={"students"} className="font-default">
+                    <Link href={"/portal/students"} className="font-default">
                       Students
                     </Link>
                   ),
@@ -142,7 +143,7 @@ const NavMenuLayout = ({ children }) => {
                   ),
                   label: (
                     <Link
-                      href={"companies"}
+                      href={"/portal/companies"}
                       className="font-default fill-dark-blue"
                     >
                       Companies
@@ -164,7 +165,7 @@ const NavMenuLayout = ({ children }) => {
                   ),
                   label: (
                     <Link
-                      href={"internships"}
+                      href={"/portal/internships"}
                       className="font-default fill-dark-blue"
                     >
                       Internships
@@ -186,10 +187,32 @@ const NavMenuLayout = ({ children }) => {
                   ),
                   label: (
                     <Link
-                      href={"diaries"}
+                      href={"/portal/diaries"}
                       className="font-default fill-dark-blue"
                     >
                       Diaries
+                    </Link>
+                  ),
+                  style: { color: "#2B3674" },
+                },
+                {
+                  key: 6,
+                  icon: (
+                    <IoSettingsOutline
+                      size={24}
+                      className={`font-default text-sm ${
+                        selectedKeys.some((key) => key.startsWith("5"))
+                          ? "fill-light-blue"
+                          : "fill-dark-gray"
+                      }`}
+                    />
+                  ),
+                  label: (
+                    <Link
+                      href={"/portal/settings"}
+                      className="font-default fill-dark-blue"
+                    >
+                      Settings
                     </Link>
                   ),
                   style: { color: "#2B3674" },
