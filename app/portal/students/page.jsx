@@ -2,7 +2,6 @@
 
 import BreadCrumpHeader from "@/components/BreadCrumpHeader";
 import PageTitle from "@/components/PageTitle";
-import { usePathname } from "next/navigation";
 import React from "react";
 import { Statistic, Card, Input, Button, Cascader, Table, Avatar } from "antd";
 import { PiStudentFill } from "react-icons/pi";
@@ -41,10 +40,10 @@ const Students = () => {
       title: "",
       render: ({ key }) => (
         <div className=" flex justify-end gap-3 pe-4">
-          <Button type="primary" onClick={() => {}}>
+          <Button type="primary" onClick={() => { }}>
             View
           </Button>
-          <Button danger onClick={() => {}}>
+          <Button danger onClick={() => { }}>
             Delete
           </Button>
         </div>
@@ -53,12 +52,9 @@ const Students = () => {
     },
   ];
 
-  const pathName = usePathname();
-  const pathSegments = pathName.split("/").filter((segment) => segment);
-
   return (
     <div className="font-default text-dark-blue">
-      <BreadCrumpHeader pathSegments={pathSegments} />
+      <BreadCrumpHeader />
 
       <PageTitle title="Students" />
 
@@ -106,14 +102,14 @@ const Students = () => {
         </Card>
       </div>
 
-      <div className="flex mt-6 gap-4">
+      <div className="flex mt-2 gap-4">
         <Input.Search
           placeholder={"Search by email or name"}
           enterButton
           className=" w-1/4 shadow-sm flex-initial"
           size="large"
           style={{ borderRadius: "0px !important" }}
-          onSearch={(value) => {}}
+          onSearch={(value) => { }}
         />
         <Cascader
           className=" font-default text-dark-dark-blue"
@@ -162,7 +158,7 @@ const Students = () => {
         />
       </div>
 
-      <div className=" mt-6">
+      <div className=" mt-2">
         <Table
           columns={tableColumns}
           size="middle"

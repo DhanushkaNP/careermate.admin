@@ -9,7 +9,7 @@ import { useIsCoordinator, useUserToken } from "@/utils/Auth/auth-selectors";
 import { useFacultyId } from "@/utils/University/uni-selectors";
 import api from "@/utils/api";
 import { Table, Button, Input, Form, Row, Col } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 const AdminUsers = () => {
@@ -60,8 +60,6 @@ const AdminUsers = () => {
   const token = useUserToken();
 
   const router = useRouter();
-  const pathName = usePathname();
-  const pathSegments = pathName.split("/").filter((segment) => segment);
 
   const [tableLoading, setTableLoading] = useState(false);
   const [coordinators, setCoordinatorUsers] = useState([]);
@@ -393,7 +391,7 @@ const AdminUsers = () => {
         </Form.Item>
       </UpdateFormModal>
 
-      <BreadCrumpHeader pathSegments={pathSegments} />
+      <BreadCrumpHeader />
 
       <PageTitle title="Coordinators" />
 

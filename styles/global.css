@@ -1,54 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .ant-menu-item {
-   @apply bg-inherit active:font-bold
+  @apply bg-inherit active:font-bold;
 }
 
-.ant-input{
-    @apply font-default !important
+.ant-input {
+  @apply font-default !important;
 }
 
 table {
-    @apply font-default 
+  @apply font-default;
 }
 
-.ant-btn-primary{
-    @apply font-default bg-light-blue
+.ant-btn-primary {
+  @apply font-default bg-light-blue;
 }
 
-.ant-btn{
-    @apply font-default
+.ant-btn {
+  @apply font-default;
 }
 
-.ant-table-row:first-child{
-    @apply ps-4 !important
+.ant-table-row:first-child {
+  @apply ps-4 !important;
 }
 
 .ant-select-item-option {
-    @apply font-default text-lg
+  @apply font-default text-lg;
 }
 
 .ant-card-body {
-    @apply py-3 w-full !important
+  @apply py-3 w-full !important;
 }
 
 .ant-statistic-content {
-    @apply flex
+  @apply flex;
 }
 
 .ant-statistic-content-prefix {
-    @apply flex items-center !important
+  @apply flex items-center !important;
 }
 
-.ant-statistic-content-prefix svg{
-    @apply align-middle inline-block !important
+.ant-statistic-content-prefix svg {
+  @apply align-middle inline-block !important;
 }
 
 .ant-tabs-tab {
-    @apply font-default text-sm !important
+  @apply font-default text-sm !important;
+}
+
+/* styles/RichTextEditor.css */
+.custom-quill-editor {
+  font-family: "Montserrat", sans-serif; /* Set your desired font */
+}
+
+.custom-quill-editor .ql-editor {
+  height: 100%;
+  overflow-y: auto;
+  font-family: "Montserrat", sans-serif; /* Ensure font applies to the editor content */
+  @apply text-base;
 }

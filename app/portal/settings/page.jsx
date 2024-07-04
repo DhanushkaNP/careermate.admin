@@ -3,7 +3,6 @@
 import BreadCrumpHeader from "@/components/BreadCrumpHeader";
 import PageTitle from "@/components/PageTitle";
 import { Card } from "antd";
-import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import DegreePrograms from "./components/DegreePrograms";
 import Industries from "./components/Industries";
@@ -31,9 +30,6 @@ const Settings = () => {
     configurations: <BatchConfigurations />,
   };
 
-  const pathName = usePathname();
-  const pathSegments = pathName.split("/").filter((segment) => segment);
-
   const [activeTableKey, setActiveTableKey] = useState("degrees");
   const onTableChange = (e) => {
     console.log(e);
@@ -42,7 +38,7 @@ const Settings = () => {
 
   return (
     <div className="font-default text-dark-blue">
-      <BreadCrumpHeader pathSegments={pathSegments} />
+      <BreadCrumpHeader />
       <PageTitle title="Settings" />
 
       <Card

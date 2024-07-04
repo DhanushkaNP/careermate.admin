@@ -3,7 +3,6 @@
 import BreadCrumpHeader from "@/components/BreadCrumpHeader";
 import PageTitle from "@/components/PageTitle";
 import { Card, Statistic, Input, Select, Table, Avatar, Button } from "antd";
-import { usePathname } from "next/navigation";
 import React from "react";
 
 import { PiBuildingsFill } from "react-icons/pi";
@@ -41,10 +40,10 @@ const Companies = () => {
       title: "",
       render: ({ key }) => (
         <div className=" flex justify-end gap-3 pe-4">
-          <Button type="primary" onClick={() => {}}>
+          <Button type="primary" onClick={() => { }}>
             View
           </Button>
-          <Button danger onClick={() => {}}>
+          <Button danger onClick={() => { }}>
             Delete
           </Button>
         </div>
@@ -53,15 +52,12 @@ const Companies = () => {
     },
   ];
 
-  const pathName = usePathname();
-  const pathSegments = pathName.split("/").filter((segment) => segment);
-
   const companyFilterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
     <div className="font-default text-dark-blue">
-      <BreadCrumpHeader pathSegments={pathSegments} />
+      <BreadCrumpHeader />
 
       <PageTitle title="Companies" />
 
@@ -99,14 +95,14 @@ const Companies = () => {
         </Card>
       </div>
 
-      <div className="flex mt-6 gap-4">
+      <div className="flex mt-2 gap-4">
         <Input.Search
           placeholder={"Search by email or name"}
           enterButton
           className=" w-1/4 shadow-sm flex-initial"
           size="large"
           style={{ borderRadius: "0px !important" }}
-          onSearch={(value) => {}}
+          onSearch={(value) => { }}
         />
 
         <Select
@@ -129,7 +125,7 @@ const Companies = () => {
         />
       </div>
 
-      <div className=" mt-6">
+      <div className=" mt-2">
         <Table
           columns={tableColumns}
           size="middle"
