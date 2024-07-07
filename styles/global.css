@@ -64,3 +64,11 @@ table {
   font-family: "Montserrat", sans-serif; /* Ensure font applies to the editor content */
   @apply text-base;
 }
+
+.internship-description ul {
+  @apply list-disc mx-8;
+}
+
+.internship-description ol {
+  @apply list-decimal mx-8;
+}

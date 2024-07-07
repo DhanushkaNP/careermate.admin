@@ -7,7 +7,7 @@ import Link from "next/link";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { UserOutlined } from "@ant-design/icons";
 import DeleteModal from "../DeleteModal";
-
+import { useRouter } from "next/navigation";
 const InternshipPostSummary = ({
   company,
   id,
@@ -16,10 +16,13 @@ const InternshipPostSummary = ({
   location,
   jobType,
   onDelete,
+  onApprove,
   showApprove = true,
 }) => {
   const [statusColor, setStatusColor] = useState("blue");
   const [name, setName] = useState("Waiting");
+
+  const router = useRouter();
 
   const [isDeleteModalOpen, SetIsDeleteModalOpen] = useState(false);
 
@@ -47,10 +50,13 @@ const InternshipPostSummary = ({
       />
       <div className="py-2 px-2 bg-white shadow rounded-md mt-2 flex gap-4">
         <Avatar size={64} icon={<UserOutlined />} className=" my-auto" />
-        <div className="flex-grow flex justify-between">
+        <div
+          className="flex-grow flex justify-between hover:cursor-pointer hover:bg-light-background"
+          onClick={() => router.push(`internships/${id}`)}
+        >
           <div className="my-auto">
             <h5 className="font-semibold">{company}</h5>
-            <h6>{jobTitle}</h6>
+            <h6 className="text-base">{jobTitle}</h6>
           </div>
           <div>
             <p className="font-semibold flex">
@@ -67,7 +73,13 @@ const InternshipPostSummary = ({
         </div>
         <div className="flex flex-col justify-center gap-2 border-s-2 ps-4">
           {showApprove && (
-            <Button size="small" className="text-xs" type="primary" ghost>
+            <Button
+              size="small"
+              className="text-xs"
+              type="primary"
+              ghost
+              onClick={() => onApprove(id)}
+            >
               Approve
             </Button>
           )}

@@ -102,9 +102,24 @@ const Internships = () => {
     try {
       await api.delete(`Faculties/${facultyId}/InternshipPost/${id}`, token);
       fetchPosts();
+      fetchStats();
       message.success("Post deleted");
     } catch (error) {
       console.error("Error deleting post:", error);
+    }
+  };
+
+  const approvePost = async (id) => {
+    try {
+      await api
+        .put(`Faculties/${facultyId}/InternshipPost/${id}/Approve`, null, token)
+        .then(() => {
+          fetchPosts();
+          fetchStats();
+        });
+      message.success("Post approved");
+    } catch (error) {
+      message.error("Approve failed");
     }
   };
 
@@ -210,6 +225,7 @@ const Internships = () => {
             jobType={p.type}
             showApprove={postStatus === "waiting" ? true : false}
             onDelete={onDeletePost}
+            onApprove={approvePost}
           />
         ))}
       </div>
