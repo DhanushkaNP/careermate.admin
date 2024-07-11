@@ -3,12 +3,16 @@
 import BreadCrumpHeader from "@/components/BreadCrumpHeader";
 import PageTitle from "@/components/PageTitle";
 import { Card, Statistic, Input, Select, Table, Avatar, Button } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { PiBuildingsFill } from "react-icons/pi";
 import { CheckOutlined, WarningOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import Status from "@/components/Status/Status";
+import { useFacultyId } from "@/utils/University/uni-selectors";
+import { useUserToken } from "@/utils/Auth/auth-selectors";
+import api, { formatFilters } from "@/utils/api";
+import DeleteModal from "@/components/DeleteModal";
 
 const Companies = () => {
   const tableColumns = [
@@ -33,17 +37,26 @@ const Companies = () => {
       width: "12%",
     },
     {
-      title: "Total studenst",
-      dataIndex: "totalStudents",
+      title: "Total interns",
+      dataIndex: "totalInterns",
     },
     {
       title: "",
-      render: ({ key }) => (
+      render: ({ key, name }) => (
         <div className=" flex justify-end gap-3 pe-4">
-          <Button type="primary" onClick={() => { }}>
+          <Button type="primary" onClick={() => {}} ghost>
             View
           </Button>
-          <Button danger onClick={() => { }}>
+          <Button
+            danger
+            onClick={() => {
+              setCompanyDeleteModalDetails({
+                isOpen: true,
+                id: key,
+                name: name,
+              });
+            }}
+          >
             Delete
           </Button>
         </div>
@@ -52,104 +65,286 @@ const Companies = () => {
     },
   ];
 
-  const companyFilterOption = (input, option) =>
-    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 15,
+    total: 0,
+  });
+
+  const [companyStats, setCompanyStats] = useState({
+    approved: 0,
+    pending: 0,
+    blocked: 0,
+  });
+
+  const [companyDeleteModalDetails, setCompanyDeleteModalDetails] = useState({
+    isOpen: false,
+    id: null,
+    name: null,
+  });
+
+  const facultyId = useFacultyId();
+  const token = useUserToken();
+
+  const [companies, setCompanies] = useState([]);
+  const [industries, setIndustries] = useState([]);
+
+  const [companyStatus, setCompanyStatus] = useState("approved");
+
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedIndustry, setSelectedIndustry] = useState();
+
+  const [industrySearchTerm, setIndustrySearchTerm] = useState(null);
+
+  const fetchStats = async () => {
+    await api
+      .get(`Faculties/${facultyId}/Company/Stats`, null, token)
+      .then((response) => {
+        setCompanyStats({
+          approved: response.stats.approvedCompaniesCount,
+          pending: response.stats.pendingCompaniesCount,
+          blocked: response.stats.blockedCompaniesCount,
+        });
+      });
+  };
+
+  const handleIndustrySearch = async (value) => {
+    setIndustrySearchTerm(value);
+    if (value) {
+      try {
+        const response = await api.get(`Faculty/${facultyId}/Industries`, {
+          search: value,
+          limit: 20,
+        });
+        setIndustries(response.items);
+      } catch (error) {
+        console.error("Failed to fetch Industries:", error);
+        setIndustries([]);
+      }
+    } else {
+      setIndustries([]);
+    }
+  };
+
+  const fetchCompanies = async (page = 1, pageSize = 15) => {
+    let offset = (page - 1) * pageSize;
+
+    let filters = {};
+    if (selectedIndustry) filters = { ...filters, industry: selectedIndustry };
+    if (companyStatus) filters = { ...filters, status: companyStatus };
+
+    let params = {
+      offset,
+      limit: pageSize,
+      search: searchKeyword,
+      ...formatFilters(filters),
+    };
+
+    try {
+      const response = await api.get(
+        `Faculties/${facultyId}/Company/List`,
+        params,
+        token
+      );
+      setCompanies(response.items);
+      console.log(response.items);
+      setPagination((prev) => ({
+        ...prev,
+        total: response.meta.count,
+        current: page,
+        pageSize: pageSize,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePaginationChange = (page, pageSize) => {
+    fetchCompanies(page, pageSize);
+  };
+
+  const deleteCompany = async () => {
+    await api.delete(
+      `Faculties/${facultyId}/Company/${companyDeleteModalDetails.id}`,
+      token
+    );
+    setCompanyDeleteModalDetails({ isOpen: false, id: null, name: null });
+    fetchCompanies();
+  };
+
+  useEffect(() => {
+    fetchStats();
+  }, [facultyId, token]);
+
+  useEffect(() => {
+    fetchCompanies();
+  }, [companyStatus, searchKeyword, selectedIndustry]);
 
   return (
-    <div className="font-default text-dark-blue">
-      <BreadCrumpHeader />
+    <>
+      {/* Delete companies modal */}
+      <DeleteModal
+        open={companyDeleteModalDetails.isOpen}
+        onCancel={() =>
+          setCompanyDeleteModalDetails({
+            isOpen: false,
+            id: null,
+            name: null,
+          })
+        }
+        message={`Do you want to delete company ${companyDeleteModalDetails.name}?`}
+        onDelete={() => {
+          deleteCompany(companyDeleteModalDetails.id);
+        }}
+      />
 
-      <PageTitle title="Companies" />
+      <div className="font-default text-dark-blue">
+        <BreadCrumpHeader />
 
-      <div className="flex flex-row gap-4 mt-4">
-        <Card bordered={false} className=" my-0 " hoverable>
-          <Statistic
-            title={<span className=" text-light-blue">Total Companies</span>}
-            value={112}
-            prefix={
-              <PiBuildingsFill size={30} className=" block align-middle mr-2" />
-            }
-            className=" my-0 font-default"
-            valueStyle={{ color: "#3056D3" }}
-          />
-        </Card>
-        <Card bordered={false} className=" my-0 " hoverable>
-          <Statistic
-            title={
-              <span className=" text-[#3f8600]">Waiting for approval</span>
-            }
-            value={93}
-            prefix={<CheckOutlined className="mr-4" />}
-            valueStyle={{ color: "#3f8600" }}
-            className="font-default"
-          />
-        </Card>
-        <Card bordered={false} className=" my-0 " hoverable>
-          <Statistic
-            title={<span className="text-black">Blocked</span>}
-            value={20}
-            prefix={<WarningOutlined className="mr-3" />}
-            bordered
-            className="font-default"
-          />
-        </Card>
-      </div>
+        <PageTitle title="Companies" />
 
-      <div className="flex mt-2 gap-4">
-        <Input.Search
-          placeholder={"Search by email or name"}
-          enterButton
-          className=" w-1/4 shadow-sm flex-initial"
-          size="large"
-          style={{ borderRadius: "0px !important" }}
-          onSearch={(value) => { }}
-        />
-
-        <Select
-          showSearch
-          optionFilterProp="children"
-          className="font-default"
-          size="large"
-          options={[
-            {
-              value: "Software Engineering",
-              label: "Software Engineering",
-            },
-            {
-              value: "Networking",
-              label: "Networking",
-            },
-          ]}
-          filterOption={companyFilterOption}
-          placeholder="Select a Industry"
-        />
-      </div>
-
-      <div className=" mt-2">
-        <Table
-          columns={tableColumns}
-          size="middle"
-          className="font-default text-md"
-          dataSource={[
-            {
-              key: 1,
-              totalStudents: 20,
-              logo: (
-                <Avatar
-                  icon={<UserOutlined />}
-                  className=" ms-2"
-                  shape="square"
+        <div className="flex flex-row gap-4 mt-4">
+          <Card
+            bordered={false}
+            className={`my-0 ${
+              companyStatus === "approved" &&
+              "bg-light-gray hover:shadow-none border-dark-dark-blue"
+            }`}
+            hoverable
+            onClick={() => setCompanyStatus("approved")}
+          >
+            <Statistic
+              title={
+                <span className=" text-light-blue">Approved Companies</span>
+              }
+              value={companyStats.approved}
+              prefix={
+                <PiBuildingsFill
+                  size={30}
+                  className=" block align-middle mr-2"
                 />
+              }
+              className=" my-0 font-default"
+              valueStyle={{ color: "#3056D3" }}
+            />
+          </Card>
+          <Card
+            bordered={false}
+            className={`my-0 ${
+              companyStatus === "waiting" &&
+              "bg-light-gray hover:shadow-none border-dark-dark-blue"
+            }`}
+            hoverable
+            onClick={() => setCompanyStatus("waiting")}
+          >
+            <Statistic
+              title={
+                <span className=" text-[#3f8600]">Waiting for approval</span>
+              }
+              value={companyStats.pending}
+              prefix={<CheckOutlined className="mr-4" />}
+              valueStyle={{ color: "#3f8600" }}
+              className="font-default"
+            />
+          </Card>
+          <Card
+            bordered={false}
+            className={`my-0 ${
+              companyStatus === "blocked" &&
+              "bg-light-gray hover:shadow-none border-dark-dark-blue"
+            }`}
+            hoverable
+            onClick={() => setCompanyStatus("blocked")}
+          >
+            <Statistic
+              title={<span className="text-black">Blocked</span>}
+              value={companyStats.blocked}
+              prefix={<WarningOutlined className="mr-3" />}
+              bordered
+              className="font-default"
+            />
+          </Card>
+        </div>
+
+        <div className="flex mt-2 gap-4">
+          <Input.Search
+            placeholder={"Search by email or name"}
+            enterButton
+            className=" w-1/4 shadow-sm flex-initial"
+            size="large"
+            style={{ borderRadius: "0px !important" }}
+            onSearch={(value) => {
+              setSearchKeyword(value);
+            }}
+            allowClear
+          />
+
+          <Select
+            showSearch
+            placeholder="Industry"
+            filterOption={false}
+            notFoundContent={null}
+            size="large"
+            allowClear
+            className="!w-80 custom-select"
+            onSearch={handleIndustrySearch}
+            value={industrySearchTerm}
+            onSelect={(value, option) => {
+              setSelectedIndustry(value);
+              setIndustrySearchTerm(value); // Set the selected value's name as the search term
+            }}
+            onClear={() => {
+              setIndustrySearchTerm("");
+            }}
+          >
+            {industries.map((i) => (
+              <Select.Option key={i.id} value={i.id}>
+                {i.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </div>
+
+        <div className=" mt-2">
+          <Table
+            columns={tableColumns}
+            size="middle"
+            className="font-default custom-table"
+            dataSource={companies.map((c) => ({
+              key: c.id,
+              totalInterns: c.totalInternsCount,
+              logo: (
+                <div className="border rounded-full w-fit ms-2">
+                  <Avatar
+                    src={c.logoUrl}
+                    icon={!c.logoUrl && <UserOutlined />}
+                    size={"large"}
+                  />
+                </div>
               ),
-              name: "Calcey Technologies",
-              industry: "Software engineering",
-              status: <Status name={"Approved"} color={"green"} />,
-              totalStudents: 20,
-            },
-          ]}
-        ></Table>
+              name: c.name,
+              industry: c.industryName,
+              status: (() => {
+                switch (c.status) {
+                  case 1:
+                    return <Status name={"Pending"} color={"blue"} />;
+                  case 2:
+                    return <Status name={"Approved"} color={"green"} />;
+                  case 3:
+                    return <Status name={"Blocked"} color={"red"} />;
+                  default:
+                    return null;
+                }
+              })(),
+            }))}
+            pagination={{
+              ...pagination,
+              onChange: handlePaginationChange,
+            }}
+          ></Table>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -32,7 +32,7 @@ const DeleteModal = ({ open, onCancel, onDelete, message }) => {
         </Button>,
       ]}
     >
-      <h6 className=" font-default text-lg font-semibold">{message}</h6>
+      <h6 className=" font-default text-lg font-semibold mb-10">{message}</h6>
     </Modal>
   );
 };

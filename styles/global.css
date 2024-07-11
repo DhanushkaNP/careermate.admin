@@ -72,3 +72,11 @@ table {
 .internship-description ol {
   @apply list-decimal mx-8;
 }
+
+.custom-table .ant-table-cell {
+  @apply text-base;
+}
+
+.scrollable-dropdown {
+  @apply max-h-52 overflow-auto;
+}
