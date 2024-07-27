@@ -13,7 +13,6 @@ export const uni = createSlice({
   initialState,
   reducers: {
     setUniversityFaculty: (state, action) => {
-      console.log(action.payload);
       const { universityId, facultyId } = action.payload;
       localStorage.removeItem("uniData");
       localStorage.setItem(
@@ -22,7 +21,6 @@ export const uni = createSlice({
           ...action.payload,
         })
       );
-      console.log(universityId, facultyId);
       return { values: { universityId, facultyId, batchId: null } };
     },
 

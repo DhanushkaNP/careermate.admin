@@ -15,6 +15,8 @@ import { useUserToken } from "@/utils/Auth/auth-selectors";
 import { cvStatus } from "@/shared/cvStatus";
 import Status from "@/components/Status/Status";
 import DeleteModal from "@/components/DeleteModal";
+import { useRouter } from "next/navigation";
+import { studentLowProfilePicture } from "@/utils/Firebase/FirebaseImageUrls";
 
 const Students = () => {
   const tableColumns = [
@@ -46,7 +48,12 @@ const Students = () => {
       title: "",
       render: ({ key, name }) => (
         <div className=" flex justify-end gap-3 pe-4">
-          <Button type="primary" onClick={() => {}}>
+          <Button
+            type="primary"
+            onClick={() => {
+              router.push(`students/${key}`);
+            }}
+          >
             View
           </Button>
           <Button
@@ -66,6 +73,8 @@ const Students = () => {
       width: 300,
     },
   ];
+
+  const router = useRouter();
 
   const [pagination, setPagination] = useState({
     pagination: {
@@ -398,8 +407,12 @@ const Students = () => {
               proPic: (
                 <div className="border rounded-full w-fit ms-2">
                   <Avatar
-                    src={s.proPicUrl && proPicUrl}
-                    icon={!s.proPicUrl && <UserOutlined />}
+                    src={
+                      s.profilePicFirebaseId
+                        ? studentLowProfilePicture(s.profilePicFirebaseId)
+                        : null
+                    }
+                    icon={!s.profilePicFirebaseId && <UserOutlined />}
                     size={"large"}
                   />
                 </div>
@@ -407,7 +420,7 @@ const Students = () => {
               name: `${s.firstName} ${s.lastName}`,
               studentId: s.studentId,
               status: s.isHired ? (
-                <Status name={"EMPLOYEED"} color={"green"} />
+                <Status name={"Hired"} color={"green"} />
               ) : (
                 <Status name={"SEEKING"} color={"red"} />
               ),

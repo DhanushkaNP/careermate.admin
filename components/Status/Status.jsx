@@ -21,7 +21,7 @@ const Status = ({ name, color }) => {
 
   return (
     <div
-      className={`border-2 rounded-2xl text-center w-fit px-2 py-0 ${borderColor}`}
+      className={`border-2 rounded-2xl text-center w-fit h-fit px-2 py-0 ${borderColor}`}
     >
       <span className={`font-semibold !text-sm ${nameColor}`}>{name}</span>
     </div>

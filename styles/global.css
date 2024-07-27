@@ -80,3 +80,11 @@ table {
 .scrollable-dropdown {
   @apply max-h-52 overflow-auto;
 }
+
+.custom-form .ant-form-item {
+  @apply mb-3;
+}
+
+.custom-form .ant-input {
+  @apply bg-light-background;
+}
