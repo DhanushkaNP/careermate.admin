@@ -9,13 +9,13 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { useUserToken } from "@/utils/Auth/auth-selectors";
 import api from "@/utils/api";
 import StudentCertifications from "@/Components/Students/StudentCertifications";
-import StudentSkills from "@/Components/Students/StudentSkills";
-import ContactsAndSocialMedia from "@/Components/Students/ContactsAndSocialMedia";
 import StudentExperiences from "@/Components/Students/StudentExperiences";
 import { studentHighProfilePicture } from "@/utils/Firebase/FirebaseImageUrls";
 import { useFacultyId } from "@/utils/University/uni-selectors";
 import { FcApproval } from "react-icons/fc";
 import { CiWarning } from "react-icons/ci";
+import ProfileSkills from "@/components/Profiles/ProfileSkills";
+import ContactsAndSocialMedia from "@/components/Profiles/ContactsAndSocialMedia";
 
 const CompanyStudentProfile = () => {
   const router = useRouter();
@@ -200,7 +200,7 @@ const CompanyStudentProfile = () => {
                 </Col>
                 <Col span={10}>
                   {/* Skills */}
-                  <StudentSkills studentId={id} />
+                  <ProfileSkills studentId={id} />
 
                   {/* Contact */}
                   <ContactsAndSocialMedia studentId={id} />

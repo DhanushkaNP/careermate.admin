@@ -224,6 +224,7 @@ const Internships = () => {
             location={p.location}
             jobType={p.type}
             showApprove={postStatus === "waiting" ? true : false}
+            companyLogoFirebaseId={p.firebaseLogoId}
             onDelete={onDeletePost}
             onApprove={approvePost}
           />

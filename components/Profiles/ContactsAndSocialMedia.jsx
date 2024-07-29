@@ -5,17 +5,25 @@ import { useUserToken } from "@/utils/Auth/auth-selectors";
 import api from "@/utils/api";
 import ContactAndSocialMediaItem from "./ContactAndSocialMediaItem";
 
-const ContactsAndSocialMedia = ({ studentId }) => {
+const ContactsAndSocialMedia = ({ studentId, companyId }) => {
   const token = useUserToken();
 
   const [contacts, setContacts] = useState([]);
 
   const fetchContacts = async () => {
-    await api
-      .get(`Students/${studentId}/Contact`, null, token)
-      .then((response) => {
-        setContacts(response.items);
-      });
+    if (studentId) {
+      await api
+        .get(`Students/${studentId}/Contact`, null, token)
+        .then((response) => {
+          setContacts(response.items);
+        });
+    } else if (companyId) {
+      await api
+        .get(`Companies/${companyId}/Contact`, null, token)
+        .then((response) => {
+          setContacts(response.items);
+        });
+    }
   };
 
   useEffect(() => {

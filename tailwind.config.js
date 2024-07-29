@@ -23,6 +23,7 @@ module.exports = {
         green: "#3f8600",
         red: "#cf1322",
         "opacity-light-blue": "rgba(48, 86, 211, 0.35)",
+        "ice-blue": "#26A4FF",
       },
     },
   },

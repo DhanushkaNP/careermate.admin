@@ -1,6 +1,6 @@
 import React from "react";
 
-const StudentSkillItem = ({ id, name }) => {
+const ProfileSkillItem = ({ name }) => {
   return (
     <div className="flex justify-between">
       <li>{name}</li>
@@ -8,4 +8,4 @@ const StudentSkillItem = ({ id, name }) => {
   );
 };
 
-export default StudentSkillItem;
+export default ProfileSkillItem;

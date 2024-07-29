@@ -19,6 +19,7 @@ const ContactAndSocialMediaItem = ({ value, type, id }) => {
     case 1:
       icon = <PhoneFilled />;
       break;
+
     case 2:
       icon = <LinkedinFilled />;
       break;
@@ -32,6 +33,7 @@ const ContactAndSocialMediaItem = ({ value, type, id }) => {
       icon = <MediumSquareFilled />;
       break;
     case 6:
+    case 7:
       icon = <GlobalOutlined />;
 
     default:

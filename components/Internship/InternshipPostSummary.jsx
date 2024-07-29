@@ -8,6 +8,7 @@ import { RiExternalLinkLine } from "react-icons/ri";
 import { UserOutlined } from "@ant-design/icons";
 import DeleteModal from "../DeleteModal";
 import { useRouter } from "next/navigation";
+import { companyLowProfilePicture } from "@/utils/Firebase/FirebaseImageUrls";
 const InternshipPostSummary = ({
   company,
   id,
@@ -17,6 +18,7 @@ const InternshipPostSummary = ({
   jobType,
   onDelete,
   onApprove,
+  companyLogoFirebaseId,
   showApprove = true,
 }) => {
   const [statusColor, setStatusColor] = useState("blue");
@@ -49,7 +51,20 @@ const InternshipPostSummary = ({
         message={`Do you want to delete the post?`}
       />
       <div className="py-2 px-2 bg-white shadow rounded-md mt-2 flex gap-4">
-        <Avatar size={64} icon={<UserOutlined />} className=" my-auto" />
+        <div className="border rounded-full">
+          {" "}
+          <Avatar
+            size={64}
+            icon={!companyLogoFirebaseId && <UserOutlined />}
+            className=" my-auto"
+            src={
+              companyLogoFirebaseId
+                ? companyLowProfilePicture(companyLogoFirebaseId)
+                : null
+            }
+          />
+        </div>
+
         <div
           className="flex-grow flex justify-between hover:cursor-pointer hover:bg-light-background"
           onClick={() => router.push(`internships/${id}`)}

@@ -13,6 +13,8 @@ import { useFacultyId } from "@/utils/University/uni-selectors";
 import { useUserToken } from "@/utils/Auth/auth-selectors";
 import api, { formatFilters } from "@/utils/api";
 import DeleteModal from "@/components/DeleteModal";
+import { companyLowProfilePicture } from "@/utils/Firebase/FirebaseImageUrls";
+import { useRouter } from "next/navigation";
 
 const Companies = () => {
   const tableColumns = [
@@ -44,7 +46,13 @@ const Companies = () => {
       title: "",
       render: ({ key, name }) => (
         <div className=" flex justify-end gap-3 pe-4">
-          <Button type="primary" onClick={() => {}} ghost>
+          <Button
+            type="primary"
+            onClick={() => {
+              router.push(`companies/${key}`);
+            }}
+            ghost
+          >
             View
           </Button>
           <Button
@@ -82,6 +90,8 @@ const Companies = () => {
     id: null,
     name: null,
   });
+
+  const router = useRouter();
 
   const facultyId = useFacultyId();
   const token = useUserToken();
@@ -316,8 +326,12 @@ const Companies = () => {
               logo: (
                 <div className="border rounded-full w-fit ms-2">
                   <Avatar
-                    src={c.logoUrl}
-                    icon={!c.logoUrl && <UserOutlined />}
+                    src={
+                      c.firebaseLogoId
+                        ? companyLowProfilePicture(c.firebaseLogoId)
+                        : null
+                    }
+                    icon={!c.firebaseLogoId && <UserOutlined />}
                     size={"large"}
                   />
                 </div>
