@@ -55,14 +55,22 @@ const ProfileSkills = ({
               <Col span={12}>
                 <ul className="font-default font-semibold list-disc ps-4 w-full pe-3">
                   {skillSetOne.map((skill) => (
-                    <ProfileSkillItem id={skill.id} name={skill.name} />
+                    <ProfileSkillItem
+                      id={skill.id}
+                      name={skill.name}
+                      key={skill.id}
+                    />
                   ))}
                 </ul>
               </Col>
               <Col span={12}>
                 <ul className="font-default font-semibold list-disc ps-4 w-full pe-3">
                   {skillSetTwo.map((skill) => (
-                    <ProfileSkillItem id={skill.id} name={skill.name} />
+                    <ProfileSkillItem
+                      id={skill.id}
+                      name={skill.name}
+                      key={skill.id}
+                    />
                   ))}
                 </ul>
               </Col>
