@@ -24,6 +24,7 @@ module.exports = {
         red: "#cf1322",
         "opacity-light-blue": "rgba(48, 86, 211, 0.35)",
         "ice-blue": "#26A4FF",
+        "light-blue-background": "#EFF4FB",
       },
     },
   },

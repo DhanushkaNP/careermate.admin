@@ -10,7 +10,7 @@ const CoordinatorAssistantLayout = ({ children }) => {
 
   useEffect(() => {
     if (!isCoordinator) {
-      router.push("/portal/student");
+      router.push("/portal/students");
     }
   }, [isCoordinator]);
 

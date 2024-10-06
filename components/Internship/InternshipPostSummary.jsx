@@ -29,7 +29,6 @@ const InternshipPostSummary = ({
   const [isDeleteModalOpen, SetIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log(id);
     switch (isApproved) {
       case false:
         setName("Waiting");

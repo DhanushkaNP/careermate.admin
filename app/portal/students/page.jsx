@@ -17,6 +17,8 @@ import Status from "@/components/Status/Status";
 import DeleteModal from "@/components/DeleteModal";
 import { useRouter } from "next/navigation";
 import { studentLowProfilePicture } from "@/utils/Firebase/FirebaseImageUrls";
+import DegreeFilter from "@/components/Filters/DegreeFilter";
+import PathywayFilter from "@/components/Filters/PathywayFilter";
 
 const Students = () => {
   const tableColumns = [
@@ -94,8 +96,6 @@ const Students = () => {
   const token = useUserToken();
 
   const [students, setStudents] = useState([]);
-  const [degrees, setDegrees] = useState([]);
-  const [pathways, setPathways] = useState([]);
 
   const [studentStatus, setStudentStatus] = useState("all");
 
@@ -340,45 +340,22 @@ const Students = () => {
             allowClear
             onClear={() => setSearchKeyword("")}
           />
-          <Select
-            placeholder="Degree Program"
-            className="font-default custom-placeholder w-80 custom-select"
-            size="large"
-            allowClear
+
+          <DegreeFilter
             onSelect={(value) => setSelectedDegreeProgram(value)}
             onClear={() => {
               setSelectedDegreeProgram(null);
               setSelectedPathway(null);
             }}
-            dropdownRender={(menu) => (
-              <div className="scrollable-dropdown">{menu}</div>
-            )}
-          >
-            {degrees.map((i) => (
-              <Select.Option key={i.id} label={i.name}>
-                {i.name}
-              </Select.Option>
-            ))}
-          </Select>
-
-          <Select
-            placeholder="Pathway"
-            className=" text-black font-default custom-placeholder w-72 custom-select"
-            size="large"
-            allowClear
+            facultyId={facultyId}
+            selectedDegreeProgram={selectedDegreeProgram}
+          />
+          <PathywayFilter
             onSelect={(value) => setSelectedPathway(value)}
             onClear={() => setSelectedPathway(null)}
-            disabled={!selectedDegreeProgram}
-            dropdownRender={(menu) => (
-              <div className="scrollable-dropdown">{menu}</div>
-            )}
-          >
-            {pathways.map((i) => (
-              <Select.Option key={i.id} label={i.name}>
-                {i.name}
-              </Select.Option>
-            ))}
-          </Select>
+            selectedDegreeProgram={selectedDegreeProgram}
+            selectedPathway={selectedPathway}
+          />
 
           <Select
             placeholder="Cv status"

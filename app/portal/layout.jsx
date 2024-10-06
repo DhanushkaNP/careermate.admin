@@ -19,6 +19,8 @@ const NavMenuLayout = ({ children }) => {
   const isAuthenticated = useIsAuth();
   const logOut = useLogout();
 
+  const isCoordinator = useIsCoordinator();
+
   const [selectedKeys, setSelectedKeys] = useState(["1.1"]);
   const handleMenuClick = (e) => {
     setSelectedKeys([e.key]);
@@ -67,7 +69,7 @@ const NavMenuLayout = ({ children }) => {
               defaultSelectedKeys={"1.1"}
               onClick={handleMenuClick}
               items={[
-                {
+                isCoordinator && {
                   key: 1,
                   icon: (
                     <RiAdminFill
@@ -195,7 +197,7 @@ const NavMenuLayout = ({ children }) => {
                   ),
                   style: { color: "#2B3674" },
                 },
-                {
+                isCoordinator && {
                   key: 6,
                   icon: (
                     <IoSettingsOutline
@@ -217,8 +219,9 @@ const NavMenuLayout = ({ children }) => {
                   ),
                   style: { color: "#2B3674" },
                 },
-              ]}
+              ].filter(Boolean)} // filter to remove `false` items
             />
+
             <div className="text-center mb-4 absolute bottom-0 mx-auto w-full">
               <Button
                 type="primary"

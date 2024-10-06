@@ -2,6 +2,7 @@
 
 import FormContainer from "@/components/Form/FormContainer";
 import FormTitle from "@/components/Form/FormTitle";
+import NumericInput from "@/components/Form/NumericInput";
 import { useIsAuth, useUserToken } from "@/utils/Auth/auth-selectors";
 import { useSetBatch } from "@/utils/University/uni-actions";
 import { useFacultyId } from "@/utils/University/uni-selectors";
@@ -84,6 +85,11 @@ const RootPage = () => {
       "lastAllowedDateForStartInternship",
       values["last-intern-date"].toISOString()
     );
+    formData.append(
+      "validInternshipPeriodInMonths",
+      values["validInternshipPeriodInMonths"]
+    );
+    formData.append("dailyDiaryDueWeeks", values["dailyDiaryDueWeeks"]);
 
     if (csvFile) {
       formData.append("studentCsv", csvFile);
@@ -208,7 +214,7 @@ const RootPage = () => {
         // Create student batch form
         <FormContainer>
           <Form
-            className="bg-white p-4 rounded-md font-default px-6 w-4/12 max-w-md shadow-md"
+            className="bg-white p-4 rounded-md font-default px-6 w-5/12 max-w-xl shadow-md"
             name="signInForm"
             layout="vertical"
             form={createStudentBatchForm}
@@ -277,9 +283,9 @@ const RootPage = () => {
                         Start At
                       </span>
                     }
-                    rules={[{ required: true, message: "Start data required" }]}
+                    rules={[{ required: true, message: "Start date required" }]}
                   >
-                    <DatePicker />
+                    <DatePicker style={{ width: "80%" }} />
                   </Form.Item>
                 </Col>
 
@@ -293,11 +299,85 @@ const RootPage = () => {
                     }
                     rules={[{ required: true, message: "End date required" }]}
                   >
-                    <DatePicker />
+                    <DatePicker style={{ width: "80%" }} />
                   </Form.Item>
                 </Col>
               </Row>
             </>
+            <Row gutter={16}>
+              <Col span={14}>
+                <Form.Item
+                  className="mt-2"
+                  name={"validInternshipPeriodInMonths"}
+                  label={
+                    <span className="font-default text-dark-dark-blue font-medium ">
+                      Considered Internship Period (Months)
+                    </span>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Evaluation internship period required",
+                    },
+                    {
+                      validator: (_, value) => {
+                        if (value === "" || value > 0) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error("The minimum value is 1")
+                        );
+                      },
+                    },
+                  ]}
+                >
+                  <NumericInput
+                    className="!font-default font-normal text-dark-dark-blue w-full"
+                    placeholder="6"
+                    maxLength={2}
+                    minLength={1}
+                    allowClear
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={10}>
+                <Form.Item
+                  className="mt-2"
+                  name={"dailyDiaryDueWeeks"}
+                  label={
+                    <span className="font-default text-dark-dark-blue font-medium ">
+                      DailyDiary due by (Weeks)
+                    </span>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Allowed last day to find internship required",
+                    },
+                    {
+                      validator: (_, value) => {
+                        if (value === "" || value > 0) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error("The minimum value is 1")
+                        );
+                      },
+                    },
+                  ]}
+                >
+                  <NumericInput
+                    className="!font-default font-normal text-dark-dark-blue w-full"
+                    placeholder="2"
+                    maxLength={2}
+                    minLength={1}
+                    allowClear
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+
             <Form.Item
               className="mt-2"
               name={"last-intern-date"}

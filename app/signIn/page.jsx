@@ -64,7 +64,7 @@ const SignIn = () => {
           });
       } else if (values.role == "assistant") {
         await api
-          .post("assistant/login", {
+          .post("CoordinatorAssistant/Login", {
             email: values.email,
             password: values.password,
           })
@@ -80,6 +80,8 @@ const SignIn = () => {
         throw new Error("Undefined role");
       }
     } catch (error) {
+      console.log(error);
+
       const errorMessage = getErrorMessage(error);
       setErrorMessage(errorMessage.message);
       return;

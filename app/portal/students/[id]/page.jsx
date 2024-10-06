@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Avatar, Button, Col, message, Row } from "antd";
+import { Avatar, Button, Col, Divider, Input, message, Row } from "antd";
 import { DeleteOutlined, LinkOutlined, UserOutlined } from "@ant-design/icons";
 import { SlGraduation } from "react-icons/sl";
 import { MdOutlineLocationOn } from "react-icons/md";
@@ -16,6 +16,10 @@ import { FcApproval } from "react-icons/fc";
 import { CiWarning } from "react-icons/ci";
 import ProfileSkills from "@/components/Profiles/ProfileSkills";
 import ContactsAndSocialMedia from "@/components/Profiles/ContactsAndSocialMedia";
+import Form from "antd/es/form/Form";
+import FormItem from "antd/es/form/FormItem";
+import DailyDiaryStudentStats from "@/components/DailyDiary/DailyDiaryStudentStats";
+import Link from "next/link";
 
 const CompanyStudentProfile = () => {
   const router = useRouter();
@@ -204,6 +208,96 @@ const CompanyStudentProfile = () => {
 
                   {/* Contact */}
                   <ContactsAndSocialMedia studentId={id} />
+
+                  {/* Other details */}
+                  <div className="bg-white shadow rounded-md p-4 font-default mt-2 flex flex-col gap-4">
+                    <h5 className="font-bold text-base">Other Details</h5>
+                    <Form
+                      labelCol={{
+                        span: 24,
+                      }}
+                      wrapperCol={{
+                        span: 24,
+                      }}
+                      layout="vertical"
+                      className="custom-form"
+                    >
+                      <FormItem
+                        label={
+                          <span className="font-default text-dark-dark-blue font-semibold">
+                            Student number
+                          </span>
+                        }
+                      >
+                        <Input value={student.studentId} className=" w-40" />
+                      </FormItem>
+
+                      <FormItem
+                        label={
+                          <span className="font-default text-dark-dark-blue font-semibold">
+                            Personal email
+                          </span>
+                        }
+                      >
+                        <Input
+                          value={student.personalEmail}
+                          className=" w-80"
+                        />
+                      </FormItem>
+
+                      <FormItem
+                        label={
+                          <span className="font-default text-dark-dark-blue font-semibold">
+                            University email
+                          </span>
+                        }
+                      >
+                        <Input
+                          value={student.universityEmail}
+                          className=" w-80"
+                        />
+                      </FormItem>
+
+                      <Row gutter={32}>
+                        <Col span={12}>
+                          <FormItem
+                            label={
+                              <span className="font-default text-dark-dark-blue font-semibold">
+                                Phone number
+                              </span>
+                            }
+                          >
+                            <Input value={student.phoneNumber} />
+                          </FormItem>
+                        </Col>
+                        <Col span={12}>
+                          <FormItem
+                            label={
+                              <span className="font-default text-dark-dark-blue font-semibold">
+                                CGPA
+                              </span>
+                            }
+                          >
+                            <Input
+                              value={student.cgpa === 0 ? "N/A" : student.cgpa}
+                            />
+                          </FormItem>
+                        </Col>
+                      </Row>
+                    </Form>
+
+                    <Link
+                      href={`${id}/daily-diaries`}
+                      className="text-center text-light-blue flex gap-1 underline text-base"
+                    >
+                      Click here to view daily diaries
+                    </Link>
+                  </div>
+
+                  {/* Daily diary stats*/}
+
+                  {/* Todo: uncomment and define rest of the logic after BE is ready */}
+                  {/* <DailyDiaryStudentStats studentId={id} /> */}
                 </Col>
               </Row>
             </div>
