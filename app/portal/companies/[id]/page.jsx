@@ -11,8 +11,9 @@ import {
 import { Avatar, Button, Col, Input, Rate, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { BsBuildings } from "react-icons/bs";
-import ProfileSkills from "@/Components/Profiles/ProfileSkills";
-import ContactsAndSocialMedia from "@/Components/Profiles/ContactsAndSocialMedia";
+import Status from "@/components/Status/Status";
+import ProfileSkills from "@/components/Profiles/ProfileSkills";
+import ContactsAndSocialMedia from "@/components/Profiles/ContactsAndSocialMedia";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { companyHighProfilePicture } from "@/utils/Firebase/FirebaseImageUrls";
@@ -21,7 +22,6 @@ import { CompanySize } from "@/shared/companySize";
 import Form from "antd/es/form/Form";
 import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
-import Status from "@/components/Status/Status";
 
 const formatDateToYearMonthStyle = (dateString) => {
   const date = new Date(dateString);

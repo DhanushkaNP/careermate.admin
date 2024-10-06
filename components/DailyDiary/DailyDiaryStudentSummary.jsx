@@ -3,7 +3,7 @@
 import { Button, Col, Row } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { dateLocalizer } from "@/utils/DateTimeLocalizer";
+import { dateLocalizer } from "@/utils/dateTimeLocalizer";
 
 const DailyDiaryStudentSummary = ({
   id,
