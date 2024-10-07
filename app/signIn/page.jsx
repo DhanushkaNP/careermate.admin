@@ -50,7 +50,7 @@ const SignIn = () => {
     try {
       if (values.role == "coordinator") {
         await api
-          .post("coordinator/login", {
+          .post("Coordinator/Login", {
             email: values.email,
             password: values.password,
           })
