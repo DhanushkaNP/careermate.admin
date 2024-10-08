@@ -200,7 +200,7 @@ const SignIn = () => {
 
         <Form.Item className="font-default text-dark-dark-blue mb-0">
           <div className="flex">
-            <p className="font-default pr-1">Forgot Password?</p>
+            {/* <p className="font-default pr-1">Forgot Password?</p> */}
             <Link href={"/signin"} className="font-default text-light-blue">
               Click here
             </Link>
